@@ -21,3 +21,13 @@ for(const id of ["OPDS","Kavita","Suwayomi"]) for(const status of [401,404,500])
  const {extension}=await loadContentExtension(module,()=>runtimeResponse({status,text:"{}"}));
  await assert.rejects(extension.connector({...args("capabilities"),baseURL:"https://server.test/"}));
 });
+
+test('OPDS treats calibre search 404 as no matches while retaining browse failures',async()=>{
+ const loaded=await loadContentExtension(path,request=>new URL(request.url).pathname.includes('/search/')
+  ?runtimeResponse({status:404,text:'Not found'})
+  :runtimeResponse({text:'<feed xmlns="http://www.w3.org/2005/Atom"><link rel="search" href="search/{searchTerms}" type="application/atom+xml"/></feed>'}));
+ const page=await loaded.extension.connector(args('search',{query:{text:'not-present',page:1,pageSize:40,filters:{}}}));
+ assert.deepEqual(page.items,[]);assert.equal(page.nextPage,null);assert.equal(page.totalCount,0);
+ const failed=await loadContentExtension(path,()=>runtimeResponse({status:404}));
+ await assert.rejects(failed.extension.connector(args('browse',{query:{page:1}})),{type:'notFound'});
+});

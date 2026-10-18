@@ -52,7 +52,7 @@ fn handler(context: Context, method: String, input: Value) -> Operation {
                 let library=option(&input,"libraryID");
                 if !library.is_empty() { numeric(&json!(library))?; url.query_pairs_mut().append_pair("libraryId",library); }
                 let query=text(&input["query"]["text"]);
-                let statements=if text(&input["operation"])=="search" && !query.trim().is_empty() {vec![json!({"comparison":0,"field":0,"value":query})]} else {vec![]};
+                let statements=if text(&input["operation"])=="search" && !query.trim().is_empty() {vec![json!({"comparison":0,"field":1,"value":query})]} else {vec![]};
                 let response=post(&context,&url,json!({"statements":statements,"combination":0,"sortOptions":{"sortField":1,"isAscending":sort!="titleDescending"}})).await?;
                 let values=response.as_array().or_else(|| ["content","items","results"].iter().find_map(|k| response[*k].as_array())).ok_or_else(|| error("Malformed server page","invalidResponse"))?;
                 let total=response["totalCount"].as_u64().or(response["totalElements"].as_u64());

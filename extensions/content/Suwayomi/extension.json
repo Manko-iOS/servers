@@ -7,7 +7,7 @@
   "runtime": "wasm",
   "crate": "manko-suwayomi",
   "connectorKind": "suwayomi",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "language": "en",
   "languages": [
     "en"

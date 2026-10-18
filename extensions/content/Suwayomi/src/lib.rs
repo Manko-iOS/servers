@@ -4,9 +4,26 @@ use serde_json::{json, Value};
 
 async fn graphql(context: &Context, input: &Value, query: &str, variables: Value) -> Result<Value> {
     let response=post(context,&endpoint(input,&["api","graphql"],&[])?,json!({"query":query,"variables":variables})).await?;
-    if response["errors"].as_array().is_some_and(|v| !v.is_empty()) { return Err(error("The server rejected the GraphQL request","serviceError")); }
+    if let Some(errors) = response["errors"].as_array().filter(|v| !v.is_empty()) {
+        let incompatible = errors.iter().any(|v| ["FieldUndefined", "UnknownType", "UnknownArgument"].iter().any(|kind| text(&v["message"]).contains(kind)));
+        return Err(error("The server rejected the GraphQL request", if incompatible {"unsupportedGraphQL"} else {"serviceError"}));
+    }
     if response["data"].is_null() { return Err(error("Malformed GraphQL response","invalidResponse")); }
     Ok(response["data"].clone())
+}
+
+async fn compatible(context: &Context, input: &Value, legacy: &str, legacy_variables: Value, current: &str, current_variables: Value) -> Result<Value> {
+    let relay = context.call("state", json!({"operation":"get","key":"suwayomi:relay-api"})).await? == true;
+    if !relay {
+        match graphql(context,input,legacy,legacy_variables).await {
+            Ok(value) => return Ok(value),
+            Err(error) if error["type"] == "unsupportedGraphQL" => {
+                context.call("state",json!({"operation":"set","key":"suwayomi:relay-api","value":true})).await?;
+            },
+            Err(error) => return Err(error),
+        }
+    }
+    graphql(context,input,current,current_variables).await
 }
 
 fn work(input: &Value, value: &Value) -> Result<Value> {
@@ -33,8 +50,12 @@ fn download(input: &Value, chapter: &str) -> Result<String> {
 fn chapter(input: &Value, value: &Value, manga: &str) -> Result<Value> {
     let id=numeric(&value["id"])?;
     let order=numeric(value.get("sourceOrder").filter(|v| !v.is_null()).unwrap_or(&value["id"]))?;
+    let published = value["uploadDate"].as_i64().or_else(|| text(&value["uploadDate"]).parse().ok())
+        .filter(|milliseconds| *milliseconds > 0).map(|milliseconds| json!(text(&manko_sdk::timestamp(milliseconds / 1000)).replace(".000Z", "Z")))
+        .unwrap_or_else(|| value["uploadDate"].clone());
+    let page_count = value["pageCount"].as_u64().filter(|count| *count > 0);
     Ok(json!({"remoteID":format!("{manga}:{order}:{id}"),"title":text(&value["name"]),"volume":value["volumeNumber"],"number":value["chapterNumber"],
-        "publishedAt":value["uploadDate"],"format":"remoteImageSequence","pageCount":value["pageCount"],"acquisitionURL":download(input,&id)?}))
+        "publishedAt":published,"format":"remoteImageSequence","pageCount":page_count,"acquisitionURL":download(input,&id)?}))
 }
 
 fn handler(context: Context, method: String, input: Value) -> Operation {
@@ -42,7 +63,7 @@ fn handler(context: Context, method: String, input: Value) -> Operation {
         match method.as_str() {"initialize"=>return Ok(Value::Null),"connectorInfo"=>return Ok(json!({"kind":"suwayomi","version":1})),"connector"=>{},_=>return Err(error("Configure a server connection first","unsupportedOperation"))}
         match text(&input["operation"]) {
             "capabilities"=>{
-                let response=graphql(&context,&input,"query MankoDiscovery { serverSettings { ip } }",json!({})).await?;
+                let response=compatible(&context,&input,"query MankoDiscovery { serverSettings { ip } }",json!({}),"query MankoDiscovery { serverSettings: settings { ip } }",json!({})).await?;
                 if response["serverSettings"].is_null() { return Err(error("Malformed server settings","invalidResponse")); }
                 Ok(json!(["browse","search","filters","authentication","acquisition","imageSequence"]))
             },
@@ -59,27 +80,37 @@ fn handler(context: Context, method: String, input: Value) -> Operation {
                 } else {
                     ("query MankoBrowse($source: Long!, $type: FetchSourceMangaType!, $page: Int!) { fetchSourceManga(source: $source, type: $type, page: $page) { mangas { id title thumbnailUrl author artist description genre status sourceId } hasNextPage } }","fetchSourceManga",json!({"source":source.parse::<u64>().unwrap(),"type":listing,"page":current}))
                 };
-                let response=graphql(&context,&input,query,variables).await?;
+                let modern_query=format!("mutation {}($input: FetchSourceMangaInput!) {{ {}: fetchSourceManga(input: $input) {{ mangas {{ id title thumbnailUrl author artist description genre status sourceId }} hasNextPage }} }}", if search {"MankoSearch"} else {"MankoBrowse"}, key);
+                let modern_variables=json!({"input":{"source":source,"type":if search {"SEARCH"} else {listing},"page":current,"query":if search {json!(terms)} else {Value::Null}}});
+                let response=compatible(&context,&input,query,variables,&modern_query,modern_variables).await?;
                 let items=response[key]["mangas"].as_array().ok_or_else(|| error("Malformed manga page","invalidResponse"))?.iter().map(|v| work(&input,v)).collect::<Result<Vec<_>>>()?;
                 Ok(page(items,if response[key]["hasNextPage"]==true {Some(current+1)} else {None},None))
             },
             "details"=>{
                 let id=numeric(&input["remoteID"])?;
-                let response=graphql(&context,&input,"query MankoDetails($id: Int!) { manga(id: $id) { id title thumbnailUrl author artist description genre status sourceId } }",json!({"id":id.parse::<u64>().unwrap()})).await?;
-                work(&input,&response["manga"])
+                let response=compatible(&context,&input,"query MankoDetails($id: Int!) { manga(id: $id) { id title thumbnailUrl author artist description genre status sourceId } }",json!({"id":id.parse::<u64>().unwrap()}),
+                    "mutation MankoDetails($input: FetchMangaAndChaptersInput!) { fetchMangaAndChapters(input: $input) { manga { id title thumbnailUrl author artist description genre status sourceId } } }",
+                    json!({"input":{"id":id.parse::<u64>().unwrap(),"fetchManga":true,"fetchChapters":false}})).await?;
+                work(&input,response.get("fetchMangaAndChapters").map(|v| &v["manga"]).unwrap_or(&response["manga"]))
             },
             "installments"=>{
                 if input["page"].as_u64().unwrap_or(1)!=1 {return Ok(page(vec![],None,None));}
                 let id=numeric(&input["remoteID"])?;
-                let response=graphql(&context,&input,"query MankoChapters($mangaId: Int!) { chapters(condition: { mangaId: $mangaId }, order: [{ by: SOURCE_ORDER, byType: ASC }]) { nodes { id name chapterNumber volumeNumber sourceOrder uploadDate pageCount } } }",json!({"mangaId":id.parse::<u64>().unwrap()})).await?;
-                let nodes=response["chapters"]["nodes"].as_array().cloned().or_else(||response["chapters"]["edges"].as_array().map(|v| v.iter().map(|e|e["node"].clone()).collect())).ok_or_else(||error("Malformed chapters response","invalidResponse"))?;
+                let response=compatible(&context,&input,"query MankoChapters($mangaId: Int!) { chapters(condition: { mangaId: $mangaId }, order: [{ by: SOURCE_ORDER, byType: ASC }]) { nodes { id name chapterNumber volumeNumber sourceOrder uploadDate pageCount } } }",json!({"mangaId":id.parse::<u64>().unwrap()}),
+                    "mutation MankoChapters($input: FetchMangaAndChaptersInput!) { fetchMangaAndChapters(input: $input) { chapters { id name chapterNumber sourceOrder uploadDate pageCount } } }",
+                    json!({"input":{"id":id.parse::<u64>().unwrap(),"fetchManga":false,"fetchChapters":true}})).await?;
+                let nodes=response["fetchMangaAndChapters"]["chapters"].as_array().cloned().or_else(||response["chapters"]["nodes"].as_array().cloned()).or_else(||response["chapters"]["edges"].as_array().map(|v| v.iter().map(|e|e["node"].clone()).collect())).ok_or_else(||error("Malformed chapters response","invalidResponse"))?;
                 let items=nodes.iter().map(|v|chapter(&input,v,&id)).collect::<Result<Vec<_>>>()?;
                 let total=items.len() as u64; Ok(page(items,None,Some(total)))
             },
             "acquisition"=>{let (_,_,id)=reference(&input["remoteID"])?;Ok(json!(download(&input,&id)?))},
             "imagePages"=>{
                 let (manga,order,_)=reference(&input["remoteID"])?;
-                let count=if let Some(count)=input["pageCount"].as_u64() {count} else {get(&context,&endpoint(&input,&["api","v1","manga",&manga,"chapter",&order],&[])?) .await?["pageCount"].as_u64().unwrap_or(0)};
+                if input["pageCount"].as_u64().is_some_and(|count| count > 50_000) {return Err(error("Invalid chapter page count","resourceLimitExceeded"));}
+                // Suwayomi keeps prepared page resources in memory. A persisted
+                // count does not mean images are ready after a server restart.
+                let count=get(&context,&endpoint(&input,&["api","v1","manga",&manga,"chapter",&order],&[])?)
+                    .await?["pageCount"].as_u64().unwrap_or(0);
                 if count==0 || count>50_000 {return Err(error("Invalid chapter page count","resourceLimitExceeded"));}
                 let current=input["query"]["page"].as_u64().unwrap_or(1).max(1);
                 let size=input["query"]["pageSize"].as_u64().unwrap_or(100).clamp(1,200);

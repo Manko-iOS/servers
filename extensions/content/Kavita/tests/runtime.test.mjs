@@ -11,7 +11,7 @@ test("Kavita compiled operations preserve pagination, filters and publication fo
   if(url.pathname.endsWith("libraries"))return runtimeResponse({text:"[]"});
   if(url.pathname.endsWith("all-v2")){
    assert.equal(url.searchParams.get("PageNumber"),"2");assert.equal(url.searchParams.get("libraryId"),"5");
-   assert.equal(request.body.sortOptions.isAscending,false);assert.equal(request.body.statements[0].value,"Fixture");
+   assert.equal(request.body.sortOptions.isAscending,false);assert.equal(request.body.statements[0].value,"Fixture");assert.equal(request.body.statements[0].field,1,"SeriesName, not Summary");
    return runtimeResponse({text:JSON.stringify([series])});
   }
   if(url.pathname.endsWith("volumes"))return runtimeResponse({text:JSON.stringify([{number:2,chapters:[{id:8,title:"Chapter",number:"1",files:[{filePath:"book.epub"}]},{id:9,range:"Two",files:[{filePath:"book.pdf"}]},{id:10,range:"Three",files:[{filePath:"book.cbz"}]}]}])});

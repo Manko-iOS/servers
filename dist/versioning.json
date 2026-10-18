@@ -15,7 +15,7 @@
       "id": "Kavita",
       "name": "Kavita",
       "description": "Connect to your own Kavita server. Manko manages connection details, credentials and downloads.",
-      "version": "3.0.0",
+      "version": "3.0.1",
       "icon": "icons/Kavita.svg",
       "languages": [
         "en"
@@ -53,8 +53,8 @@
       "extension": {
         "apiVersion": "3.0",
         "runtime": "wasm",
-        "moduleURL": "sources/Kavita/3.0.0/main.wasm",
-        "sha256": "689a2df0af85eb7639b34310cc83b46fd2aa4fc01f97f6936cb0baee8d23303d",
+        "moduleURL": "sources/Kavita/3.0.1/main.wasm",
+        "sha256": "a1d7b87686f7d157d7917c7c5635667ac22c5d022a92a7acb8b8da852d600ce2",
         "size": 447748,
         "allowedHTTPSHosts": [],
         "authenticationModes": [
@@ -125,7 +125,7 @@
       "id": "OPDS",
       "name": "OPDS",
       "description": "Connect to your own OPDS server. Manko manages connection details, credentials and downloads.",
-      "version": "3.0.0",
+      "version": "3.0.1",
       "icon": "icons/OPDS.png",
       "languages": [
         "en"
@@ -163,9 +163,9 @@
       "extension": {
         "apiVersion": "3.0",
         "runtime": "wasm",
-        "moduleURL": "sources/OPDS/3.0.0/main.wasm",
-        "sha256": "aa7d559b670e906080aac4dc2e0b3e5352cb6e6f8b7a35428bf08dd7a586f31a",
-        "size": 551383,
+        "moduleURL": "sources/OPDS/3.0.1/main.wasm",
+        "sha256": "c1aa25c0416d6b3e162425b6e3e6194226507119dc8951ee5527aed1845b45eb",
+        "size": 551701,
         "allowedHTTPSHosts": [],
         "authenticationModes": [
           "none",
@@ -180,7 +180,7 @@
       "id": "Suwayomi",
       "name": "Suwayomi",
       "description": "Connect to your own Suwayomi server. Manko manages connection details, credentials and downloads.",
-      "version": "3.0.0",
+      "version": "3.0.1",
       "icon": "icons/Suwayomi.svg",
       "languages": [
         "en"
@@ -219,9 +219,9 @@
       "extension": {
         "apiVersion": "3.0",
         "runtime": "wasm",
-        "moduleURL": "sources/Suwayomi/3.0.0/main.wasm",
-        "sha256": "5a8234cde2ec286174234dde662419f7a8a6582a8d2e569587af93bd1d25aeec",
-        "size": 438270,
+        "moduleURL": "sources/Suwayomi/3.0.1/main.wasm",
+        "sha256": "703d261685e9af4367eb48e53a0d30c8e4e8d0a5358d661770e6a5cc5293e0f8",
+        "size": 457647,
         "allowedHTTPSHosts": [],
         "authenticationModes": [
           "none",

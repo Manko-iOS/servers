@@ -123,7 +123,12 @@ fn handler(context: Context, method: String, input: Value) -> Operation {
                 if let Some(value)=remembered.as_str(){url=Url::parse(value).map_err(|_|error("Invalid remembered page","invalidResponse"))?;}
                 else if !terms.trim().is_empty(){let root=feed(&context,&base).await?;if let Some(search)=resolved_link(&base,&root["links"],"search")?{url=search_url(&context,search,terms,current,size).await?;}}
                 else if current>1{url.query_pairs_mut().append_pair("page",&current.to_string());}
-                let catalog=feed(&context,&url).await?;
+                let catalog=match feed(&context,&url).await {
+                    Ok(catalog) => catalog,
+                    // calibre signals an empty search with HTTP 404.
+                    Err(error) if !terms.is_empty() && error["type"] == "notFound" => return Ok(page(vec![],None,Some(0))),
+                    Err(error) => return Err(error),
+                };
                 let mut works=remember(&context,&url,&catalog).await?;
                 if !terms.is_empty(){let query=terms.to_lowercase();works.retain(|v|format!("{} {} {}",text(&v["title"]),v["authors"],v["tags"]).to_lowercase().contains(&query));}
                 match option(&input,"order"){""|"feed"=>{},"titleAscending"=>works.sort_by_key(|v|text(&v["title"]).to_lowercase()),"titleDescending"=>works.sort_by_key(|v|std::cmp::Reverse(text(&v["title"]).to_lowercase())),_=>return Err(error("Invalid catalog order","invalidSearchTerm"))}
