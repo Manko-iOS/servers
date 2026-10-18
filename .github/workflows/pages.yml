@@ -24,10 +24,16 @@ jobs:
         with:
           targets: wasm32-unknown-unknown
       - run: npm ci
+      # Rebuild in the ephemeral checkout without overwriting versioned artifacts.
+      - name: Prepare generated output for verification
+        run: rm -rf dist
       - run: npm test
       - run: npm run check
       - run: npm run publish:dry-run
       - run: npm run verify:generated
+      # Publish the reviewed immutable modules, preserving their versions and hashes.
+      - name: Restore reviewed publication artifacts
+        run: git restore --source=HEAD -- dist && npm run verify:generated
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
