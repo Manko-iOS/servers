@@ -24,9 +24,14 @@ jobs:
         with:
           targets: wasm32-unknown-unknown
       - run: npm ci
-      # Rebuild in the ephemeral checkout without overwriting versioned artifacts.
+      # Rebuild current modules while retaining historical published versions.
       - name: Prepare generated output for verification
-        run: rm -rf dist
+        run: |
+          node --input-type=module <<'JS'
+          import {readFileSync, rmSync} from 'node:fs';
+          const manifest = JSON.parse(readFileSync('dist/versioning.json', 'utf8'));
+          for (const entry of manifest.sources) rmSync(`dist/${entry.extension.moduleURL}`);
+          JS
       - run: npm test
       - run: npm run check
       - run: npm run publish:dry-run
