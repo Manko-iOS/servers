@@ -1,0 +1,20 @@
+{
+  "pack": "servers",
+  "expectedIDs": [
+    "Kavita",
+    "Komga",
+    "OPDS",
+    "Suwayomi"
+  ],
+  "packs": {
+    "servers": {
+      "id": "manko.servers",
+      "name": "Manko Servers",
+      "description": "User-installed personal-server connectors.",
+      "homepage": "https://github.com/Manko-iOS/servers",
+      "privacyURL": "https://github.com/Manko-iOS/servers/blob/main/PRIVACY.md",
+      "publisherName": "Manko Contributors",
+      "repositoryURL": "https://manko-ios.github.io/servers/"
+    }
+  }
+}

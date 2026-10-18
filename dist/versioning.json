@@ -1,0 +1,236 @@
+{
+  "schemaVersion": 3,
+  "repository": {
+    "id": "manko.servers",
+    "name": "Manko Servers",
+    "description": "User-installed personal-server connectors.",
+    "homepage": "https://github.com/Manko-iOS/servers",
+    "privacyURL": "https://github.com/Manko-iOS/servers/blob/main/PRIVACY.md",
+    "publisher": {
+      "name": "Manko Contributors"
+    }
+  },
+  "sources": [
+    {
+      "id": "Kavita",
+      "name": "Kavita",
+      "description": "Connect to your own Kavita server. Manko manages connection details, credentials and downloads.",
+      "version": "3.0.0",
+      "icon": "icons/Kavita.svg",
+      "languages": [
+        "en"
+      ],
+      "contentRating": "SAFE",
+      "capabilities": [
+        "browse",
+        "search",
+        "filters",
+        "details",
+        "installments",
+        "authentication",
+        "acquisition"
+      ],
+      "developers": [
+        {
+          "name": "manko Extension Contributors"
+        }
+      ],
+      "rightsDeclaration": "Licensed under Apache-2.0.",
+      "rightsURL": "https://github.com/Manko-iOS/servers/blob/main/extensions/content/Kavita/LICENSE",
+      "reportURL": "https://github.com/Manko-iOS/servers/issues/new/choose",
+      "sourceURL": "https://github.com/Manko-iOS/servers/tree/main/extensions/content/Kavita",
+      "sourceRevision": "main",
+      "entryType": "extension",
+      "kind": "content",
+      "availability": "available",
+      "permissions": {
+        "values": [
+          "network",
+          "redactedLogging",
+          "state"
+        ]
+      },
+      "extension": {
+        "apiVersion": "3.0",
+        "runtime": "wasm",
+        "moduleURL": "sources/Kavita/3.0.0/main.wasm",
+        "sha256": "689a2df0af85eb7639b34310cc83b46fd2aa4fc01f97f6936cb0baee8d23303d",
+        "size": 447748,
+        "allowedHTTPSHosts": [],
+        "authenticationModes": [
+          "none",
+          "basic",
+          "bearer",
+          "apiKey"
+        ],
+        "connectorKind": "kavita"
+      }
+    },
+    {
+      "id": "Komga",
+      "name": "Komga",
+      "description": "Connect to your own Komga servers. Connection details, credentials and publication downloads are managed by manko.",
+      "version": "3.0.0",
+      "icon": "icons/Komga.svg",
+      "languages": [
+        "en"
+      ],
+      "contentRating": "SAFE",
+      "capabilities": [
+        "browse",
+        "search",
+        "filters",
+        "details",
+        "installments",
+        "authentication",
+        "acquisition"
+      ],
+      "developers": [
+        {
+          "name": "manko Extension Contributors"
+        }
+      ],
+      "rightsDeclaration": "Licensed under Apache-2.0.",
+      "rightsURL": "https://github.com/Manko-iOS/servers/blob/main/extensions/content/Komga/LICENSE",
+      "reportURL": "https://github.com/Manko-iOS/servers/issues/new/choose",
+      "sourceURL": "https://github.com/Manko-iOS/servers/tree/main/extensions/content/Komga",
+      "sourceRevision": "main",
+      "entryType": "extension",
+      "kind": "content",
+      "availability": "available",
+      "permissions": {
+        "values": [
+          "network",
+          "redactedLogging",
+          "state"
+        ]
+      },
+      "extension": {
+        "apiVersion": "3.0",
+        "runtime": "wasm",
+        "moduleURL": "sources/Komga/3.0.0/main.wasm",
+        "sha256": "e9dc3c5a895402cc15fb0dd80dfc3af4e03b3c07d40599f9e339792f7ab8a74a",
+        "size": 434831,
+        "allowedHTTPSHosts": [],
+        "authenticationModes": [
+          "none",
+          "basic",
+          "bearer",
+          "apiKey"
+        ],
+        "connectorKind": "komga"
+      }
+    },
+    {
+      "id": "OPDS",
+      "name": "OPDS",
+      "description": "Connect to your own OPDS server. Manko manages connection details, credentials and downloads.",
+      "version": "3.0.0",
+      "icon": "icons/OPDS.png",
+      "languages": [
+        "en"
+      ],
+      "contentRating": "SAFE",
+      "capabilities": [
+        "browse",
+        "search",
+        "filters",
+        "details",
+        "installments",
+        "authentication",
+        "acquisition"
+      ],
+      "developers": [
+        {
+          "name": "manko Extension Contributors"
+        }
+      ],
+      "rightsDeclaration": "Licensed under Apache-2.0.",
+      "rightsURL": "https://github.com/Manko-iOS/servers/blob/main/extensions/content/OPDS/LICENSE",
+      "reportURL": "https://github.com/Manko-iOS/servers/issues/new/choose",
+      "sourceURL": "https://github.com/Manko-iOS/servers/tree/main/extensions/content/OPDS",
+      "sourceRevision": "main",
+      "entryType": "extension",
+      "kind": "content",
+      "availability": "available",
+      "permissions": {
+        "values": [
+          "network",
+          "redactedLogging",
+          "state"
+        ]
+      },
+      "extension": {
+        "apiVersion": "3.0",
+        "runtime": "wasm",
+        "moduleURL": "sources/OPDS/3.0.0/main.wasm",
+        "sha256": "aa7d559b670e906080aac4dc2e0b3e5352cb6e6f8b7a35428bf08dd7a586f31a",
+        "size": 551383,
+        "allowedHTTPSHosts": [],
+        "authenticationModes": [
+          "none",
+          "basic",
+          "bearer",
+          "apiKey"
+        ],
+        "connectorKind": "opds"
+      }
+    },
+    {
+      "id": "Suwayomi",
+      "name": "Suwayomi",
+      "description": "Connect to your own Suwayomi server. Manko manages connection details, credentials and downloads.",
+      "version": "3.0.0",
+      "icon": "icons/Suwayomi.svg",
+      "languages": [
+        "en"
+      ],
+      "contentRating": "SAFE",
+      "capabilities": [
+        "browse",
+        "search",
+        "filters",
+        "details",
+        "installments",
+        "authentication",
+        "acquisition",
+        "imageSequence"
+      ],
+      "developers": [
+        {
+          "name": "manko Extension Contributors"
+        }
+      ],
+      "rightsDeclaration": "Licensed under Apache-2.0.",
+      "rightsURL": "https://github.com/Manko-iOS/servers/blob/main/extensions/content/Suwayomi/LICENSE",
+      "reportURL": "https://github.com/Manko-iOS/servers/issues/new/choose",
+      "sourceURL": "https://github.com/Manko-iOS/servers/tree/main/extensions/content/Suwayomi",
+      "sourceRevision": "main",
+      "entryType": "extension",
+      "kind": "content",
+      "availability": "available",
+      "permissions": {
+        "values": [
+          "network",
+          "redactedLogging",
+          "state"
+        ]
+      },
+      "extension": {
+        "apiVersion": "3.0",
+        "runtime": "wasm",
+        "moduleURL": "sources/Suwayomi/3.0.0/main.wasm",
+        "sha256": "5a8234cde2ec286174234dde662419f7a8a6582a8d2e569587af93bd1d25aeec",
+        "size": 438270,
+        "allowedHTTPSHosts": [],
+        "authenticationModes": [
+          "none",
+          "basic",
+          "bearer",
+          "apiKey"
+        ],
+        "connectorKind": "suwayomi"
+      }
+    }
+  ]
+}

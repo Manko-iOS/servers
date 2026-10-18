@@ -1,0 +1,36 @@
+{
+  "counts": {
+    "content": 4,
+    "tracker": 0
+  },
+  "packs": {
+    "servers": [
+      "Kavita",
+      "Komga",
+      "OPDS",
+      "Suwayomi"
+    ]
+  },
+  "entries": [
+    {
+      "id": "Kavita",
+      "kind": "content",
+      "availability": "available"
+    },
+    {
+      "id": "Komga",
+      "kind": "content",
+      "availability": "available"
+    },
+    {
+      "id": "OPDS",
+      "kind": "content",
+      "availability": "available"
+    },
+    {
+      "id": "Suwayomi",
+      "kind": "content",
+      "availability": "available"
+    }
+  ]
+}

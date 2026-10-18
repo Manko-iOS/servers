@@ -1,0 +1,9 @@
+{
+  "schemaVersion": 1,
+  "asset": "icon.svg",
+  "sourceURL": "https://raw.githubusercontent.com/Suwayomi/Suwayomi-WebUI/579f5e899fb3e27d4be8340eba64968e6bd0d061/public/favicon.svg",
+  "sha256": "c36ddc885bedfd1c346dd6f1e5ca435e93b1f456b8020f62f4d723e06a64a4b0",
+  "attribution": "Suwayomi official project icon; brand artwork is separate from the extension code license.",
+  "modifications": [],
+  "license": "Upstream brand artwork; no extension-code license asserted."
+}

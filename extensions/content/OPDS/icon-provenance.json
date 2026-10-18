@@ -1,0 +1,9 @@
+{
+  "schemaVersion": 1,
+  "asset": "icon.png",
+  "sourceURL": "https://opds.io/apple-touch-icon.png",
+  "sha256": "a884c5b9b34c995d4a0a92dda6e0e2e0b0277d145b478cc51a127bfbdc8083c9",
+  "attribution": "OPDS official project icon; brand artwork is separate from the extension code license.",
+  "modifications": [],
+  "license": "Upstream brand artwork; no extension-code license asserted."
+}

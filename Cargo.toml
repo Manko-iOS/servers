@@ -1,0 +1,32 @@
+[workspace]
+resolver = "2"
+members = [
+  "packages/sdk",
+  "extensions/content/Kavita",
+  "extensions/content/Komga",
+  "extensions/content/OPDS",
+  "extensions/content/Suwayomi"
+]
+
+[workspace.package]
+edition = "2021"
+license = "Apache-2.0"
+rust-version = "1.90"
+
+[workspace.dependencies]
+manko-sdk = { path = "packages/sdk" }
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+base64 = "0.22"
+futures = { version = "0.3", default-features = false, features = ["std", "async-await"] }
+url = "2.5"
+regex = "1.11"
+sha2 = "0.10"
+chrono = { version = "0.4", default-features = false, features = ["std"] }
+
+[profile.release]
+opt-level = "s"
+lto = true
+codegen-units = 1
+panic = "abort"
+strip = "symbols"

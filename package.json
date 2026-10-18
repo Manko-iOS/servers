@@ -1,0 +1,21 @@
+{
+  "name": "@manko/servers",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "workspaces": [
+    "packages/cli"
+  ],
+  "engines": {
+    "node": ">=22"
+  },
+  "license": "Apache-2.0",
+  "scripts": {
+    "compile": "node packages/cli/bin/manko-ext.mjs compile",
+    "check": "node packages/cli/bin/manko-ext.mjs check",
+    "bundle": "node packages/cli/bin/manko-ext.mjs bundle && node scripts/handoff.mjs",
+    "test": "cargo test --workspace --locked && npm run bundle && node --test packages/cli/test/*.test.mjs extensions/content/*/tests/*.test.mjs",
+    "publish:dry-run": "node packages/cli/bin/manko-ext.mjs publish --dry-run",
+    "verify:generated": "node packages/cli/lib/verify-generated.mjs"
+  }
+}
