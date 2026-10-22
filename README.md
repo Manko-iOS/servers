@@ -36,4 +36,4 @@ npm run publish:dry-run
 
 The Pages workflow is manual-only. When publication is authorized, push the reviewed commit, enable GitHub Pages with Actions, then run the workflow. It hosts the catalog and a searchable extension list with language and content-rating filters and individual app install links. The links above become available only after deployment.
 
-See [Contributing](CONTRIBUTING.md), [Privacy](PRIVACY.md), [Security](SECURITY.md), and the [Extension Developer Kit](https://github.com/Manko-iOS/extension-kit).
+See [Contributing](CONTRIBUTING.md), [Privacy](PRIVACY.md), [Security](SECURITY.md), and the [Extension Developer Kit](https://github.com/mangoreader-ios/extension-kit).

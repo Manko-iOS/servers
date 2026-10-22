@@ -4,8 +4,8 @@
     "id": "manko.servers",
     "name": "Manko Servers",
     "description": "User-installed personal-server connectors.",
-    "homepage": "https://github.com/Manko-iOS/servers",
-    "privacyURL": "https://github.com/Manko-iOS/servers/blob/main/PRIVACY.md",
+    "homepage": "https://github.com/mangoreader-ios/servers",
+    "privacyURL": "https://github.com/mangoreader-ios/servers/blob/main/PRIVACY.md",
     "publisher": {
       "name": "Manko Contributors"
     }
@@ -36,9 +36,9 @@
         }
       ],
       "rightsDeclaration": "Licensed under Apache-2.0.",
-      "rightsURL": "https://github.com/Manko-iOS/servers/blob/main/extensions/content/Kavita/LICENSE",
-      "reportURL": "https://github.com/Manko-iOS/servers/issues/new/choose",
-      "sourceURL": "https://github.com/Manko-iOS/servers/tree/main/extensions/content/Kavita",
+      "rightsURL": "https://github.com/mangoreader-ios/servers/blob/main/extensions/content/Kavita/LICENSE",
+      "reportURL": "https://github.com/mangoreader-ios/servers/issues/new/choose",
+      "sourceURL": "https://github.com/mangoreader-ios/servers/tree/main/extensions/content/Kavita",
       "sourceRevision": "main",
       "entryType": "extension",
       "kind": "content",
@@ -91,9 +91,9 @@
         }
       ],
       "rightsDeclaration": "Licensed under Apache-2.0.",
-      "rightsURL": "https://github.com/Manko-iOS/servers/blob/main/extensions/content/Komga/LICENSE",
-      "reportURL": "https://github.com/Manko-iOS/servers/issues/new/choose",
-      "sourceURL": "https://github.com/Manko-iOS/servers/tree/main/extensions/content/Komga",
+      "rightsURL": "https://github.com/mangoreader-ios/servers/blob/main/extensions/content/Komga/LICENSE",
+      "reportURL": "https://github.com/mangoreader-ios/servers/issues/new/choose",
+      "sourceURL": "https://github.com/mangoreader-ios/servers/tree/main/extensions/content/Komga",
       "sourceRevision": "main",
       "entryType": "extension",
       "kind": "content",
@@ -146,9 +146,9 @@
         }
       ],
       "rightsDeclaration": "Licensed under Apache-2.0.",
-      "rightsURL": "https://github.com/Manko-iOS/servers/blob/main/extensions/content/OPDS/LICENSE",
-      "reportURL": "https://github.com/Manko-iOS/servers/issues/new/choose",
-      "sourceURL": "https://github.com/Manko-iOS/servers/tree/main/extensions/content/OPDS",
+      "rightsURL": "https://github.com/mangoreader-ios/servers/blob/main/extensions/content/OPDS/LICENSE",
+      "reportURL": "https://github.com/mangoreader-ios/servers/issues/new/choose",
+      "sourceURL": "https://github.com/mangoreader-ios/servers/tree/main/extensions/content/OPDS",
       "sourceRevision": "main",
       "entryType": "extension",
       "kind": "content",
@@ -202,9 +202,9 @@
         }
       ],
       "rightsDeclaration": "Licensed under Apache-2.0.",
-      "rightsURL": "https://github.com/Manko-iOS/servers/blob/main/extensions/content/Suwayomi/LICENSE",
-      "reportURL": "https://github.com/Manko-iOS/servers/issues/new/choose",
-      "sourceURL": "https://github.com/Manko-iOS/servers/tree/main/extensions/content/Suwayomi",
+      "rightsURL": "https://github.com/mangoreader-ios/servers/blob/main/extensions/content/Suwayomi/LICENSE",
+      "reportURL": "https://github.com/mangoreader-ios/servers/issues/new/choose",
+      "sourceURL": "https://github.com/mangoreader-ios/servers/tree/main/extensions/content/Suwayomi",
       "sourceRevision": "main",
       "entryType": "extension",
       "kind": "content",

@@ -11,8 +11,8 @@
       "id": "manko.servers",
       "name": "Manko Servers",
       "description": "User-installed personal-server connectors.",
-      "homepage": "https://github.com/Manko-iOS/servers",
-      "privacyURL": "https://github.com/Manko-iOS/servers/blob/main/PRIVACY.md",
+      "homepage": "https://github.com/mangoreader-ios/servers",
+      "privacyURL": "https://github.com/mangoreader-ios/servers/blob/main/PRIVACY.md",
       "publisherName": "Manko Contributors",
       "repositoryURL": "https://manko-ios.github.io/servers/"
     }

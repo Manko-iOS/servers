@@ -1,6 +1,6 @@
 # Contributing
 
-This repository contains only the servers catalog. For the SDK, CLI and extension authoring guide, see [Manko Extension Kit](https://github.com/Manko-iOS/extension-kit).
+This repository contains only the servers catalog. For the SDK, CLI and extension authoring guide, see [Manko Extension Kit](https://github.com/mangoreader-ios/extension-kit).
 
 Run `npm ci`, `npm test`, `npm run check`, and `npm run publish:dry-run`. Rust uses the pinned toolchain and this workspace's `target/`. Tests use offline fixtures; live verification requires your own server or tracker account.
 
